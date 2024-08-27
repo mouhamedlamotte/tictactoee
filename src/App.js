@@ -12,7 +12,7 @@ import {
 } from "./components/ui/dialog"
 
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 
 export default function App() {
 
@@ -86,9 +86,9 @@ export default function App() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8 md:p-24">
-          <h3 className="text-lg font-bold text-center">BIENVENU AU TICTACTOE</h3>
+          <h3 className="text-lg font-bold text-center">TICTACTOE</h3>
           <div>
-            <div className="grid grid-cols-3  border-slate-600 rounded">
+            <div className="grid grid-cols-3  border-slate-600 rounded-xl">
                 {
                   matrice.map((cell, i)=>{
                     return (
@@ -120,7 +120,7 @@ export default function App() {
           hasWinner ? <Button onClick={resetGame}>Rejouer</Button> :
         <div>
           {
-            playerOne ? <span className="text-sm font-bold">C&apos;est Au tour du joueur{" "}<span className="text-xl text-blue-400">X</span></span> : <span className="text-sm font-bold">C&apos;est Au tour du jouer{" "} <span className="text-xl text-green-400">0</span></span>
+            playerOne ? <span className="text-sm font-bold">C&apos;est au tour du joueur{" "}<span className="text-xl text-blue-400">X</span></span> : <span className="text-sm font-bold">C&apos;est au tour du jouer{" "} <span className="text-xl text-green-400">0</span></span>
           }
         </div>
         }
@@ -136,10 +136,10 @@ const WinnerDialog = ({open, setOpen, winner}) =>{
     <Dialog open={open} onOpenChange={()=>setOpen(!open)}>
     <DialogContent className="sm:max-w-md">
     <DialogHeader>
-          <DialogTitle>Felicatation</DialogTitle>
+          <DialogTitle>Congratulations 🎉</DialogTitle>
         </DialogHeader>
         <div className="py-4">
-            Le Jouer {winner} a remporter la partie
+            Le Jouer <span className="font-bold text-xl">{winner}</span>  a remporte la partie
           </div >
         <DialogFooter className="sm:justify-end">
           <DialogClose asChild>

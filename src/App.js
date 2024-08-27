@@ -23,7 +23,7 @@ export default function App() {
   ])
 
   const [playerOne, setplayerOne] = useState(true)
-  const [hasWinner, setHaswinner] = useState(false)
+  const [gameEnd, setGameEnd] = useState(false)
 
 
 
@@ -33,7 +33,7 @@ export default function App() {
       new_matrice[i][j] = value;
       setMatrice(new_matrice);
       if (isWinner(new_matrice)){
-        setHaswinner(true)
+        setGameEnd(true)
         setOpen(true)
       } else {
         setplayerOne(!playerOne)
@@ -53,18 +53,23 @@ export default function App() {
       [0, 0, 0] 
     ])
     setplayerOne(true)
-    setHaswinner(false)
+    setGameEnd(false)
   }
   
   const isWinner = (matrice)=>{
     console.log("matrice vw", matrice)
+    let have_empty = false
     for (let i = 0; i < matrice.length; i++) {
       const row = matrice[i]
+      if (row.includes(0)){ have_empty = true}
       let sum = 0
       row.map(e => sum += e)
       if (sum === 3 || sum === -3){
           return true
       }
+    }
+    if (have_empty === false) {
+      setGameEnd(true)
     }
     const sum_matrice_diagonal = matrice[0][0] + matrice[1][1] + matrice[2][2] 
     const sum_matrice_diagonal_secondaire = matrice[0][2] + matrice[1][1] + matrice[2][0] 
@@ -96,7 +101,7 @@ export default function App() {
                       {
                         cell.map((col, j)=>{
                           return(
-                            <button disabled={hasWinner} key={`col-${j}`} className="h-[80px] w-[80px] border flex justify-center items-center hover:bg-muted [&_p]:hover:flex" title="cell"
+                            <button disabled={gameEnd} key={`col-${j}`} className="h-[80px] w-[80px] border flex justify-center items-center hover:bg-muted [&_p]:hover:flex" title="cell"
                             onClick={()=>handleUpdateMatrice(i, j, playerOne ? 1 : -1)}
                             >
                             { col === 0 && (
@@ -117,7 +122,7 @@ export default function App() {
             </div>
         </div>
         {
-          hasWinner ? <Button onClick={resetGame}>Rejouer</Button> :
+          gameEnd ? <Button onClick={resetGame}>Rejouer</Button> :
         <div>
           {
             playerOne ? <span className="text-sm font-bold">C&apos;est au tour du joueur{" "}<span className="text-xl text-blue-400">X</span></span> : <span className="text-sm font-bold">C&apos;est au tour du jouer{" "} <span className="text-xl text-green-400">0</span></span>

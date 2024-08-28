@@ -13,6 +13,7 @@ import {
 
 
 import {  useEffect, useState } from "react";
+import { cn } from "./lib/utils";
 
 export default function App() {
 
@@ -36,7 +37,7 @@ export default function App() {
     if (new_matrice[i][j] === 0) {
       new_matrice[i][j] = value;
       setMatrice(new_matrice);
-      if (isWinner(new_matrice)){
+      if (hasWinner(new_matrice)){
         const player = playerOne ? 'X' : 'O'
         setPlayerWins({ ...plaerWins, [player]: plaerWins[player] + 1 })
         setGameEnd(true)
@@ -62,7 +63,7 @@ export default function App() {
     setGameEnd(false)
   }
   
-  const isWinner = (matrice)=>{
+  const hasWinner = (matrice)=>{
     console.log("matrice vw", matrice)
     let have_empty = false
     for (let i = 0; i < matrice.length; i++) {
@@ -109,7 +110,7 @@ export default function App() {
       </div>
           <h3 className="text-lg font-bold text-center">TICTACTOE</h3>
           <div>
-            <div className="grid grid-cols-3  border-slate-600 rounded-xl">
+            <div className="grid grid-cols-3 border rounded-xl overflow-hidden" style={{borderRadius: 3}}>
                 {
                   matrice.map((cell, i)=>{
                     return (
@@ -117,7 +118,7 @@ export default function App() {
                       {
                         cell.map((col, j)=>{
                           return(
-                            <button disabled={gameEnd} key={`col-${j}`} className="h-[80px] w-[80px] border flex justify-center items-center hover:bg-muted [&_p]:hover:flex" title="cell"
+                            <button disabled={gameEnd} key={`col-${j}`} className={cn("h-[80px] w-[80px] border flex justify-center items-center hover:bg-muted [&_p]:hover:flex", col === 0 ? "" : col === 1 ? "border-blue-900" : "border-green-900")} title="cell"
                             onClick={()=>handleUpdateMatrice(i, j, playerOne ? 1 : -1)}
                             >
                             { col === 0 && (

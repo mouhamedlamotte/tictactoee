@@ -21,6 +21,10 @@ export default function App() {
     [0, 0, 0],
     [0, 0, 0]
   ])
+  const [plaerWins, setPlayerWins] = useState({
+    'X': 0,
+    'O': 0
+  })
 
   const [playerOne, setplayerOne] = useState(true)
   const [gameEnd, setGameEnd] = useState(false)
@@ -33,6 +37,8 @@ export default function App() {
       new_matrice[i][j] = value;
       setMatrice(new_matrice);
       if (isWinner(new_matrice)){
+        const player = playerOne ? 'X' : 'O'
+        setPlayerWins({ ...plaerWins, [player]: plaerWins[player] + 1 })
         setGameEnd(true)
         setOpen(true)
       } else {
@@ -91,6 +97,16 @@ export default function App() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8 md:p-24">
+      <div className="flex gap-2 items-center">
+        <span>{plaerWins.X}</span>
+        &bull;
+      <span className="text-xl font-bold text-blue-400">X</span>
+      <div className="mx-5">VS</div>
+      <span className="text-xl font-bold text-green-400">0</span>
+      &bull;
+      <span>{plaerWins.O}</span>
+
+      </div>
           <h3 className="text-lg font-bold text-center">TICTACTOE</h3>
           <div>
             <div className="grid grid-cols-3  border-slate-600 rounded-xl">
